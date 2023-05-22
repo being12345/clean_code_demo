@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Date: 2023/5/22 13:50
  */
 public class Primes {
-    public static boolean[] isPrimes;
+    private static boolean[] isPrimes;
 
     public static int[] generatePrimes(int maxValue) {
         if (maxValue >= 2) {
@@ -17,13 +17,8 @@ public class Primes {
 
             initisPrimes(maxValue);
 
-            for (int i = 2; i < Math.sqrt(s) + 1; i++) {
-                if (isPrimes[i]) {
-                    for (int j = 2 * i; j < s; j += i) {
-                        isPrimes[j] = false;
-                    }
-                }
-            }
+            sievePrimes(maxValue);
+
             int count = 0;
             for (int i = 0; i < s; i++) {
                 if (isPrimes[i]) {
@@ -51,6 +46,17 @@ public class Primes {
             isPrimes[i] = true;
         }
     }
+
+    public static void sievePrimes(int maxValue) {
+        for (int i = 2; i < Math.sqrt(maxValue + 1) + 1; i++) {
+            if (isPrimes[i]) {
+                for (int j = 2 * i; j < maxValue + 1; j += i) {
+                    isPrimes[j] = false;
+                }
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         String expected = "[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]";
