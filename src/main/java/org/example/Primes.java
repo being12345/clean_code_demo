@@ -32,13 +32,13 @@ public class Primes {
         isPrimes = new boolean[maxValue + 1];
 
         isPrimes[0] = isPrimes[1] = false;
-        for (int i = 2; i < maxValue + 1; i++) {
+        for (int i = 2; i < isPrimes.length; i++) {
             isPrimes[i] = true;
         }
     }
 
     public static void sievePrimes(int maxValue) {
-        for (int i = 2; i < Math.sqrt(maxValue + 1) + 1; i++) {
+        for (int i = 2; i < Math.sqrt(isPrimes.length) + 1; i++) {
             if (isPrimes[i]) {
                 markMultiples(maxValue, i);
             }
@@ -46,14 +46,14 @@ public class Primes {
     }
 
     public static void markMultiples(int maxValue, int prime) {
-        for (int j = 2 * prime; j < maxValue + 1; j += prime) {
+        for (int j = 2 * prime; j < isPrimes.length; j += prime) {
             isPrimes[j] = false;
         }
     }
 
     public static int countPrimes(int maxValue) {
         int count = 0;
-        for (int i = 0; i < maxValue + 1; i++) {
+        for (int i = 0; i < isPrimes.length; i++) {
             if (isPrimes[i]) {
                 count++;
             }
@@ -62,7 +62,7 @@ public class Primes {
     }
 
     public static void setPrimes(int maxValue, int[] result) {
-        for (int i = 0, j = 0; i < maxValue + 1; i++) {
+        for (int i = 0, j = 0; i < isPrimes.length; i++) {
             if (isPrimes[i]) {
                 result[j++] = i;
             }
