@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.Arrays;
 
+
 /**
  * @className: Primes
  * @description: generate primes(practice for chapter4)
@@ -12,29 +13,18 @@ public class Primes {
     private static boolean[] isPrimes;
 
     public static int[] generatePrimes(int maxValue) {
-        if (maxValue >= 2) {
-            int s = maxValue + 1;
-
+        if (maxValue < 2) {
+            return new int[0];
+        } else {
             initisPrimes(maxValue);
 
             sievePrimes(maxValue);
 
-            int count = 0;
-            for (int i = 0; i < s; i++) {
-                if (isPrimes[i]) {
-                    count++;
-                }
-            }
-            int[] primes = new int[count];
+            int[] result = new int[countPrimes(maxValue)];
 
-            for (int i = 0, j = 0; i < s; i++) {
-                if (isPrimes[i]) {
-                    primes[j++] = i;
-                }
-            }
-            return primes;
-        } else {
-            return new int[0];
+            setPrimes(maxValue, result);
+            
+            return result;
         }
     }
 
@@ -50,9 +40,31 @@ public class Primes {
     public static void sievePrimes(int maxValue) {
         for (int i = 2; i < Math.sqrt(maxValue + 1) + 1; i++) {
             if (isPrimes[i]) {
-                for (int j = 2 * i; j < maxValue + 1; j += i) {
-                    isPrimes[j] = false;
-                }
+                markMultiples(maxValue, i);
+            }
+        }
+    }
+
+    public static void markMultiples(int maxValue, int prime) {
+        for (int j = 2 * prime; j < maxValue + 1; j += prime) {
+            isPrimes[j] = false;
+        }
+    }
+
+    public static int countPrimes(int maxValue) {
+        int count = 0;
+        for (int i = 0; i < maxValue + 1; i++) {
+            if (isPrimes[i]) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static void setPrimes(int maxValue, int[] result) {
+        for (int i = 0, j = 0; i < maxValue + 1; i++) {
+            if (isPrimes[i]) {
+                result[j++] = i;
             }
         }
     }
